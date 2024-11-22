@@ -448,7 +448,7 @@ client.on('message', async (msg) => {
                 case '1':
                     client.sendMessage(chatId, `💰 *Your Current Balance:* ₹${user.earnings}.`);
                     break;
-                case '1':
+                case '2':
                     client.sendMessage(chatId, `Use: withdraw <amount>\n*Example:* withdraw 50`);
                     break;
                 case '3':
@@ -744,7 +744,7 @@ client.on('change_state', (state) => {
 });
 
 // Initialize the Client
-client.initialize();
+client.initialize()
 
 
 const express = require('express');
