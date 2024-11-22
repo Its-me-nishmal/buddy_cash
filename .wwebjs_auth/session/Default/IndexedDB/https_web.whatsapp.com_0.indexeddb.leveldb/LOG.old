@@ -1,0 +1,17 @@
+2024/11/22-02:06:48.232 8f91 Reusing MANIFEST /workspaces/buddy_cash/.wwebjs_auth/session/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2024/11/22-02:06:48.232 8f91 Recovering log #163
+2024/11/22-02:06:48.257 8f91 Reusing old log /workspaces/buddy_cash/.wwebjs_auth/session/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/000163.log 
+2024/11/22-02:06:50.123 8fa6 Level-0 table #170: started
+2024/11/22-02:06:50.157 8fa6 Level-0 table #170: 500263 bytes OK
+2024/11/22-02:06:50.158 8fa6 Delete type=0 #163
+2024/11/22-02:06:50.159 8fa6 Manual compaction at level-0 from '\x00"\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00#\x00\x00\x00' @ 0 : 0; will stop at (end)
+2024/11/22-02:06:50.288 8fa6 Compacting 1@1 + 3@2 files
+2024/11/22-02:06:50.609 8fa6 Generated table #171@1: 57540 keys, 2241185 bytes
+2024/11/22-02:06:50.949 8fa6 Generated table #172@1: 46576 keys, 2215144 bytes
+2024/11/22-02:06:51.150 8fa6 Generated table #173@1: 33093 keys, 1554621 bytes
+2024/11/22-02:06:51.150 8fa6 Compacted 1@1 + 3@2 files => 6010950 bytes
+2024/11/22-02:06:51.151 8fa6 compacted to: files[ 0 0 3 0 0 0 0 ]
+2024/11/22-02:06:51.152 8fa6 Delete type=2 #170
+2024/11/22-02:06:51.152 8fa6 Delete type=2 #165
+2024/11/22-02:06:51.152 8fa6 Delete type=2 #166
+2024/11/22-02:06:51.152 8fa6 Delete type=2 #167
