@@ -190,10 +190,10 @@ client.on('message', async (msg) => {
                 const referrer = await User.findOne({ buddyCode: targetUser.referrer });
                 if (referrer) {
                     // Update referrer's earnings and paymentHistory
-                    referrer.earnings += 10;
+                    referrer.earnings += 13;
                     referrer.paymentHistory.push({
                         type: 'deposit',
-                        amount: 10,
+                        amount: 13,
                         date: new Date(),
                         status: 'approved',
                         reason: `Referral bonus from ${targetUser.buddyCode}`,
@@ -203,7 +203,7 @@ client.on('message', async (msg) => {
                     // Notify the first-level referrer
                     client.sendMessage(
                         referrer.chatId,
-                        `🎉 Your referral just earned you ₹10! Your new balance is ₹${referrer.earnings}.`
+                        `🎉 Your Buddy Code just earned you ₹10! Your new balance is ₹${referrer.earnings}.`
                     );
 
                     // Handle Second-level referral
@@ -431,7 +431,7 @@ client.on('message', async (msg) => {
         if (!user.name) {
             user.name = message;
             await user.save();
-            client.sendMessage(chatId, `Thank you, ${user.name}. Please send your ₹25 payment screenshot for verification.`);
+            client.sendMessage(chatId, `Thank you, ${user.name}. Please send your ₹20 payment screenshot for verification.  send register fee to nishmal@sbi`);
             return;
         }
 
@@ -503,7 +503,7 @@ client.on('message', async (msg) => {
             }
         
             if (amount < 30) {
-                client.sendMessage(chatId, '⚠️ The minimum withdrawal amount is ₹30.');
+                client.sendMessage(chatId, '⚠️ The minimum withdrawal amount is ₹25.');
                 return;
             }
         
@@ -568,13 +568,13 @@ client.on('message', async (msg) => {
 
         // If user has not paid yet
         if (!user.hasPaid) {
-            client.sendMessage(chatId, '💳 Please send your ₹25 payment screenshot for verification. send register fee to nishmal@sbi');
+            client.sendMessage(chatId, '💳 Please send your ₹20 payment screenshot for verification. send register fee to nishmal@sbi');
             return;
         }
 
         // If user is not approved yet
         if (!user.isApproved) {
-            client.sendMessage(chatId, '⏳ Your payment is awaiting admin approval. Please wait for confirmation.');
+            client.sendMessage(chatId, '⏳ Your payment is awaiting admin approval. Please wait for confirmation. estimate - within 3 hours');
             return;
         }
 
