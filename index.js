@@ -233,12 +233,13 @@ client.on('message', async (msg) => {
                 // Notify User
                 client.sendMessage(
                     targetUser.chatId,
-                    `✅ Payment approved! Thank you, ${targetUser.name || profileName}! Your referrer has been credited.\nShare this link to make money: ${REFERRAL_LINK_BASE}${targetUser.buddyCode}\nYour balance is ₹${targetUser.earnings}.`
+                    `✅ Payment approved! Thank you, ${targetUser.name || profileName}! Your referrer has been credited. say Hi to more details !`
                 );
 
                 // Add user to group
                 try {
-                    await client.addParticipant(GROUP_JID, targetUser.chatId);
+                    const groupChat = await client.getChatById(GROUP_JID);
+                    await groupChat.addParticipants([targetUser.chatId]);
                     client.sendMessage(chatId, `Payment approved and ${targetUser.name || profileName} added to the group.`);
                 } catch (error) {
                     console.error('Error adding user to group:', error);
@@ -374,7 +375,7 @@ client.on('message', async (msg) => {
                 let finalReferrer = null;
 
                 if (referrerCode !== 'ADMINADMIN') {
-                    const referrer = await User.findOne({ buddyCode: referrerCode });
+                    var referrer = await User.findOne({ buddyCode: referrerCode });
                     if (referrer) {
                         finalReferrer = referrerCode;
                     } else {
@@ -417,7 +418,7 @@ client.on('message', async (msg) => {
                     );
                 } else {
                     await user.save();
-                    client.sendMessage(chatId, `Buddy Code ${generatedBuddyCode} registered with referrer ${finalReferrer}. Please provide your name to complete registration.`);
+                    client.sendMessage(chatId, `Buddy Code ${generatedBuddyCode} registered with Your Buddy ${referrer.name}. Please provide your name to complete registration.`);
                 }
 
                 return;
