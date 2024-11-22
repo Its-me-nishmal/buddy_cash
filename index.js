@@ -416,7 +416,7 @@ client.on('message', async (msg) => {
 
                     client.sendMessage(
                         chatId,
-                        `Share this link to make money: ${REFERRAL_LINK_BASE}${generatedBuddyCode}\nYour balance is ₹${user.earnings}.`
+                        `Share this link to make money: ${REFERRAL_LINK_BASE}${generatedBuddyCode}\n`
                     );
                 } else {
                     await user.save();
