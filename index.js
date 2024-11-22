@@ -752,7 +752,7 @@ const app = express();
 const PORT = 3000;
 
 // Health Check Endpoint
-app.get('/health', (req, res) => {
+app.get('/', (req, res) => {
     res.json({ success: true });
 });
 
