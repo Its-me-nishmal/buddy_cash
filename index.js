@@ -64,7 +64,7 @@ async function generateBuddyCode() {
 }
 
 // Helper Function to Send Interactive Menu
-async function sendMenu(chatId) {
+async function sendMenu(chatId,cd) {
     const menu = `
 *Buddy Cash Menu:*
 1️⃣ Balance
@@ -73,6 +73,8 @@ async function sendMenu(chatId) {
 4️⃣ My Buddies
 5️⃣ Contact Admin (917994107442)
 6️⃣ Buddy Message Formats
+
+Your Buddy Code : *${cd}*
 
 Reply with the number corresponding to your choice.
     `;
@@ -439,7 +441,7 @@ client.on('message', async (msg) => {
         // Handle interactive menu for greetings
         const greetings = ['hi', 'hello', 'hlo', 'haai', 'hey'];
         if (greetings.includes(lowerMessage)) {
-            sendMenu(chatId);
+            sendMenu(chatId,user.buddyCode);
             return;
         }
 
