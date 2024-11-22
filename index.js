@@ -68,10 +68,11 @@ async function sendMenu(chatId) {
     const menu = `
 *Buddy Cash Menu:*
 1️⃣ Balance
-2️⃣ History
-3️⃣ My Buddies
-4️⃣ Contact Admin (917994107442)
-5️⃣ Buddy Message Formats
+2️⃣ Withdrawal 
+3️⃣ History
+4️⃣ My Buddies
+5️⃣ Contact Admin (917994107442)
+6️⃣ Buddy Message Formats
 
 Reply with the number corresponding to your choice.
     `;
@@ -377,7 +378,7 @@ client.on('message', async (msg) => {
                     if (referrer) {
                         finalReferrer = referrerCode;
                     } else {
-                        client.sendMessage(chatId, 'Invalid referrer Buddy Code. Please enter a valid 10-character Buddy Code or use "ADMINADMIN" for no referrer.');
+                        client.sendMessage(chatId, 'Invalid referrer Buddy Code. Please enter a valid 10-character Buddy Code');
                         return;
                     }
                 }
@@ -447,7 +448,10 @@ client.on('message', async (msg) => {
                 case '1':
                     client.sendMessage(chatId, `💰 *Your Current Balance:* ₹${user.earnings}.`);
                     break;
-                case '2':
+                case '1':
+                    client.sendMessage(chatId, `Use: withdraw <amount>\n*Example:* withdraw 50`);
+                    break;
+                case '3':
                     if (user.paymentHistory.length === 0) {
                         client.sendMessage(chatId, '📄 No transactions found.');
                     } else {
@@ -458,7 +462,7 @@ client.on('message', async (msg) => {
                         client.sendMessage(chatId, history);
                     }
                     break;
-                case '3':
+                case '4':
                     const buddies = await User.find({ referrer: user.buddyCode });
                     if (buddies.length === 0) {
                         client.sendMessage(chatId, '👥 You have no buddies yet.');
@@ -470,10 +474,10 @@ client.on('message', async (msg) => {
                         client.sendMessage(chatId, buddiesList);
                     }
                     break;
-                case '4':
+                case '5':
                     client.sendMessage(chatId, '📞 You can contact the admin at *917994107442* for any assistance.');
                     break;
-                case '5':
+                case '6':
                     await sendBuddyMessageFormats(chatId);
                     break;
                 default:
@@ -564,7 +568,7 @@ client.on('message', async (msg) => {
 
         // If user has not paid yet
         if (!user.hasPaid) {
-            client.sendMessage(chatId, '💳 Please send your ₹25 payment screenshot for verification.');
+            client.sendMessage(chatId, '💳 Please send your ₹25 payment screenshot for verification. send register fee to nishmal@sbi');
             return;
         }
 
@@ -741,3 +745,27 @@ client.on('change_state', (state) => {
 
 // Initialize the Client
 client.initialize();
+
+
+const express = require('express');
+const app = express();
+const PORT = 3000;
+
+// Health Check Endpoint
+app.get('/health', (req, res) => {
+    res.json({ success: true });
+});
+
+// Start Server
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+});
+
+// Health Check Every Minute
+setInterval(() => {
+    console.log('Health check triggered');
+    fetch(`https://buddy-cash.onrender.com`)
+        .then(res => res.json())
+        .then(data => console.log('Health Check Response:', data))
+        .catch(err => console.error('Health Check Error:', err));
+}, 60000); // 60000 ms = 1 minute
