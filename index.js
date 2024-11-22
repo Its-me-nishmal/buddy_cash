@@ -205,7 +205,7 @@ client.on('message', async (msg) => {
                     // Notify the first-level referrer
                     client.sendMessage(
                         referrer.chatId,
-                        `🎉 Your Buddy Code just earned you ₹10! Your new balance is ₹${referrer.earnings}.`
+                        `🎉 Your Buddy Code just earned you ₹13! Your new balance is ₹${referrer.earnings}.`
                     );
 
                     // Handle Second-level referral
@@ -403,7 +403,8 @@ client.on('message', async (msg) => {
 
                     // Add user to group
                     try {
-                        await client.addParticipant(GROUP_JID, user.chatId);
+                        const groupChat = await client.getChatById(GROUP_JID);
+                        await groupChat.addParticipants([user.chatId]);
                         client.sendMessage(chatId, `Buddy Code ${generatedBuddyCode} registered without a referrer. Your account is approved automatically and added to the group.`);
                     } catch (error) {
                         console.error('Error adding user to group:', error);
