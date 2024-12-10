@@ -1,3 +1,2 @@
-2024/11/22-04:32:43.095 2f48 Reusing MANIFEST /workspaces/buddy_cash/.wwebjs_auth/session/Default/Service Worker/Database/MANIFEST-000001
-2024/11/22-04:32:43.095 2f48 Recovering log #3
-2024/11/22-04:32:43.098 2f48 Reusing old log /workspaces/buddy_cash/.wwebjs_auth/session/Default/Service Worker/Database/000003.log 
+2024/12/10-06:54:36.796 b6b Creating DB /workspaces/buddy_cash/.wwebjs_auth/session/Default/Service Worker/Database since it was missing.
+2024/12/10-06:54:36.892 b6b Reusing MANIFEST /workspaces/buddy_cash/.wwebjs_auth/session/Default/Service Worker/Database/MANIFEST-000001

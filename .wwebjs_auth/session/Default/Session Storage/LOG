@@ -1,3 +1,2 @@
-2024/11/22-04:32:43.792 2f47 Reusing MANIFEST /workspaces/buddy_cash/.wwebjs_auth/session/Default/Session Storage/MANIFEST-000001
-2024/11/22-04:32:43.792 2f47 Recovering log #3
-2024/11/22-04:32:43.792 2f47 Reusing old log /workspaces/buddy_cash/.wwebjs_auth/session/Default/Session Storage/000003.log 
+2024/12/10-06:54:33.679 b5f Creating DB /workspaces/buddy_cash/.wwebjs_auth/session/Default/Session Storage since it was missing.
+2024/12/10-06:54:33.683 b5f Reusing MANIFEST /workspaces/buddy_cash/.wwebjs_auth/session/Default/Session Storage/MANIFEST-000001

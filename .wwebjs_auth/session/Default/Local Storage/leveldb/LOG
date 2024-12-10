@@ -1,3 +1,2 @@
-2024/11/22-04:32:42.969 2f48 Reusing MANIFEST /workspaces/buddy_cash/.wwebjs_auth/session/Default/Local Storage/leveldb/MANIFEST-000001
-2024/11/22-04:32:42.970 2f48 Recovering log #7
-2024/11/22-04:32:42.974 2f48 Reusing old log /workspaces/buddy_cash/.wwebjs_auth/session/Default/Local Storage/leveldb/000007.log 
+2024/12/10-06:54:30.564 b5f Creating DB /workspaces/buddy_cash/.wwebjs_auth/session/Default/Local Storage/leveldb since it was missing.
+2024/12/10-06:54:30.720 b5f Reusing MANIFEST /workspaces/buddy_cash/.wwebjs_auth/session/Default/Local Storage/leveldb/MANIFEST-000001
