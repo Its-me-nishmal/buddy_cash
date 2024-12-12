@@ -784,7 +784,6 @@ client.initialize()
 
 
 const express = require('express');
-const { path } = require('express/lib/application');
 const app = express();
 const PORT = 3000;
 
