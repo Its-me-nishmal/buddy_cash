@@ -538,7 +538,7 @@ client.on('message', async (msg) => {
                 return;
             }
         
-            if (amount < 30) {
+            if (amount < 25) {
                 client.sendMessage(chatId, '⚠️ The minimum withdrawal amount is ₹25.');
                 return;
             }
