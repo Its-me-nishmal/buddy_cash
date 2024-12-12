@@ -3,6 +3,8 @@ const { Client, LocalAuth, MessageMedia } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
 const mongoose = require('mongoose');
 const crypto = require('crypto');
+const path = require('path');
+const fs = require('fs');
 
 // Load environment variables
 const { MONGODB_URI, ADMIN_NUMBER, REFERRAL_LINK_BASE, GROUP_JID } = process.env;
@@ -238,6 +240,22 @@ client.on('message', async (msg) => {
                     `✅ Payment approved! Thank you, ${targetUser.name || profileName}! Your referrer has been credited. say Hi to more details !`
                 );
 
+                const pdfPath = path.join(__dirname, 'pdf', 'BuddyChatJest.pdf');
+
+        // Check if the PDF file exists
+        if (!fs.existsSync(pdfPath)) {
+            throw new Error(`PDF file not found at path: ${pdfPath}`);
+        }
+
+        // Create a MessageMedia instance from the PDF file
+        const media = MessageMedia.fromFilePath(pdfPath);
+
+        // 4.3 Define the Caption
+        const pdfCaption = `🙏 Thank you! This PDF is not for external sale. It includes 1000 ChatGPT mastering prompts for your participation.`;
+
+        // 4.4 Send the PDF with Caption
+        await client.sendMessage(targetUser.chatId, media, { caption: pdfCaption });
+
                 // Add user to group
                 try {
                     const groupChat = await client.getChatById(GROUP_JID);
@@ -291,7 +309,7 @@ client.on('message', async (msg) => {
             }
 
             // Approve Withdrawal
-            if (lowerMessage.startsWith('approve_withdrawal')) {
+            if (lowerMessage.startsWith('app_with')) {
                 const parts = message.split(' ');
                 if (parts.length !== 2) {
                     client.sendMessage(chatId, 'Invalid format. Use: approve_withdrawal <chatId>');
@@ -307,25 +325,36 @@ client.on('message', async (msg) => {
                 }
 
                 // Update earnings and payment history
-                targetUser.earnings -= 30; // Deduct the withdrawal amount
-                targetUser.withdrawalPending = false;
+                
 
                 // Update the last withdrawal entry in paymentHistory
                 const lastWithdrawal = targetUser.paymentHistory[targetUser.paymentHistory.length - 1];
                 if (lastWithdrawal && lastWithdrawal.type === 'withdrawal' && lastWithdrawal.status === 'pending') {
+                    targetUser.earnings -= lastWithdrawal.amount; // Deduct the withdrawal amount
+                targetUser.withdrawalPending = false;
                     lastWithdrawal.status = 'approved';
-                }
-                await targetUser.save();
-
-                // Notify User
+                    
+                    await targetUser.save();
+                     // Notify User
                 client.sendMessage(
                     targetUser.chatId,
-                    `✅ Your withdrawal of ₹30 has been approved and sent to your UPI ID (${targetUser.upiId}). Your new balance is ₹${targetUser.earnings}.`
+                    `✅ Your withdrawal of ₹${lastWithdrawal.amount} has been approved and sent to your UPI ID (${targetUser.upiId}). Your new balance is ₹${targetUser.earnings}.`
                 );
 
                 // Notify Admin
-                client.sendMessage(chatId, `Withdrawal of ₹30 approved for ${targetUser.name || profileName} (${targetChatId}).`);
+                client.sendMessage(chatId, `Withdrawal of ₹${lastWithdrawal.amount} approved for ${targetUser.name || profileName} (${targetChatId}).`);
 
+                } else {
+                    // Notify User
+                client.sendMessage(
+                    targetUser.chatId,
+                    `Something wen wrong !!`
+                );
+                return;
+                }
+                
+
+               
                 return;
             }
 
@@ -349,18 +378,21 @@ client.on('message', async (msg) => {
 
                 targetUser.withdrawalPending = false;
 
+                 // Update the last withdrawal entry in paymentHistory
+                 const lastWithdrawal = targetUser.paymentHistory[targetUser.paymentHistory.length - 1];
+
                 // Update the last withdrawal entry in paymentHistory
-                targetUser.paymentHistory.push({ type: 'withdrawal', amount: 30, status: 'rejected', reason });
+                targetUser.paymentHistory.push({ type: 'withdrawal', amount: lastWithdrawal.amount, status: 'rejected', reason });
                 await targetUser.save();
 
                 // Notify User
                 client.sendMessage(
                     targetUser.chatId,
-                    `❌ Your withdrawal of ₹30 has been rejected by admin. Reason: ${reason}`
+                    `❌ Your withdrawal of ₹${lastWithdrawal.amount} has been rejected by admin. Reason: ${reason}`
                 );
 
                 // Notify Admin
-                client.sendMessage(chatId, `Withdrawal of ₹30 rejected for ${targetUser.name || profileName} (${targetChatId}). Reason: ${reason}`);
+                client.sendMessage(chatId, `Withdrawal of ₹${lastWithdrawal.amount} rejected for ${targetUser.name || profileName} (${targetChatId}). Reason: ${reason}`);
 
                 return;
             }
@@ -752,6 +784,7 @@ client.initialize()
 
 
 const express = require('express');
+const { path } = require('express/lib/application');
 const app = express();
 const PORT = 3000;
 
