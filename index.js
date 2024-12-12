@@ -614,7 +614,7 @@ client.on('message', async (msg) => {
             return;
         }
 
-        const imagePath = path.join(__dirname, 'pdf', 'promo.jpg');
+        const imagePath = path.join(__dirname, 'pdf', 'promo.png');
         const media = MessageMedia.fromFilePath(imagePath);
 
         // After approval, respond with referral link and balance
