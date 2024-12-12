@@ -153,7 +153,7 @@ client.on('message', async (msg) => {
 
             // Update user status to pending approval
             user.pendingApproval = true;
-            user.paymentHistory.push({ type: 'deposit', amount: 25, status: 'pending' }); // Assuming ₹25 payment
+            user.paymentHistory.push({ type: 'deposit', amount: 20, status: 'pending' }); // Assuming ₹20 payment
             await user.save();
 
             // Notify User
@@ -292,7 +292,7 @@ client.on('message', async (msg) => {
                 }
 
                 targetUser.pendingApproval = false;
-                targetUser.paymentHistory.push({ type: 'deposit', amount: 25, status: 'rejected', reason });
+                targetUser.paymentHistory.push({ type: 'deposit', amount: 20, status: 'rejected', reason });
                 targetUser.rejectionReason = reason;
                 await targetUser.save();
 
@@ -428,7 +428,7 @@ client.on('message', async (msg) => {
                 });
 
                 // If referrer is ADMINADMIN or no referrer, approve automatically
-                if (finalReferrer === null || referrerCode === 'ADMINADMIN') {
+                if ( referrerCode === 'ADMINADMIN') {
                     user.isApproved = true;
                     user.hasPaid = true;
                     await user.save();
