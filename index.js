@@ -614,12 +614,30 @@ client.on('message', async (msg) => {
             return;
         }
 
+        const imagePath = path.join(__dirname, 'pdf', 'promo.jpg');
+        const media = MessageMedia.fromFilePath(imagePath);
+
         // After approval, respond with referral link and balance
         const referralLink = `${REFERRAL_LINK_BASE}${user.buddyCode}`;
-        client.sendMessage(
-            chatId,
-            `🔗 *Share this link to make money:* ${referralLink}\n💰 *Your balance:* ₹${user.earnings}.`
-        );
+        
+
+         // Define the caption
+         const caption = `💰 *Join Buddy Cash & Earn Big with Your Buddies!* 💰\n\n
+         📖 *Get the exclusive "1,000+ ChatGPT Prompts PDF" for just ₹20!*\n
+         🚀 *Connect with your Buddies and earn:*\n
+         ✅ ₹13 when your Buddy joins.\n
+         ✅ ₹2 when their Buddies join.\n\n
+         📲 *How to Start?*\n
+         1️⃣ Register with this Buddy Code: *${user.buddyCode}*\n
+         2️⃣ Send ₹20 to get your digital product.\n
+         3️⃣ Get verified, join the group, and start earning today!\n\n
+         🔗 *Your Buddy Link:*\n
+         ${referralLink}`;
+ 
+         // Send the image with the caption
+         await client.sendMessage(chatId, media, { caption: caption });
+         console.log('Promo image sent successfully!');
+        
     } catch (e) { 
         console.log('Error in message handler:', e); 
     }
@@ -734,26 +752,7 @@ client.on('group_leave', async (notification) => {
     );
 });
 
-// Group Update Handler
-client.on('group_update', async (notification) => {
-    const groupId = notification.id.remote;
-    const oldGroupData = notification.oldData;
-    const newGroupData = notification.newData;
 
-    // Example: Detect if the group subject has changed
-    if (oldGroupData.subject !== newGroupData.subject) {
-        client.sendMessage(
-            groupId,
-            `📝 The group name has been changed from "${oldGroupData.subject}" to "${newGroupData.subject}".`
-        );
-
-        // Notify admin about the group update
-        client.sendMessage(
-            ADMIN_NUMBER,
-            `📝 Group ${groupId} changed its name from "${oldGroupData.subject}" to "${newGroupData.subject}".`
-        );
-    }
-});
 
 // Battery Status Handler
 client.on('battery', (batteryInfo) => {
